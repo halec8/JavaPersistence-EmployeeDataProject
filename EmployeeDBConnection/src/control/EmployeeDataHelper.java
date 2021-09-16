@@ -36,64 +36,93 @@ public class EmployeeDataHelper {
 	//searches for an employee by their first name
 	public List<EmployeeInformation> searchForEmployeeByFirstName(String firstName) {
 	
-		EntityManager em = emFactory.createEntityManager();
-		em.getTransaction().begin();
-		TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.employeeFirstName = :selectedEmployeeFirstName", EmployeeInformation.class);
-		typedQuery.setParameter("selectedEmployeeFirstName", firstName);
-				
-		List<EmployeeInformation>foundEmployeeInformations = typedQuery.getResultList();
-		em.close();
-		
-		return foundEmployeeInformations;
+		try {
+			EntityManager em = emFactory.createEntityManager();
+			em.getTransaction().begin();
+			TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.employeeFirstName = :selectedEmployeeFirstName", EmployeeInformation.class);
+			typedQuery.setParameter("selectedEmployeeFirstName", firstName);
+					
+			List<EmployeeInformation>foundEmployeeInformations = typedQuery.getResultList();
+			em.close();
+			
+			return foundEmployeeInformations;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("The information entered to search did not find any results or was invalid. Try running the program again!");
+		}
+		return null;
 		
 	}
 	
 	//searches for an employee by their last name
 	public List<EmployeeInformation> searchForEmployeeByLastName(String lastName) {
-		EntityManager em = emFactory.createEntityManager();
-		em.getTransaction().begin();
-		TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.employeeLastName = :selectedEmployeeLastName", EmployeeInformation.class);
-		typedQuery.setParameter("selectedEmployeeLastName", lastName);
-		List<EmployeeInformation>foundEmployeeInformations = typedQuery.getResultList();
-		em.close();
-		
-		return foundEmployeeInformations;
+		try {
+			EntityManager em = emFactory.createEntityManager();
+			em.getTransaction().begin();
+			TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.employeeLastName = :selectedEmployeeLastName", EmployeeInformation.class);
+			typedQuery.setParameter("selectedEmployeeLastName", lastName);
+			List<EmployeeInformation>foundEmployeeInformations = typedQuery.getResultList();
+			em.close();
+			
+			return foundEmployeeInformations;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("The information entered to search did not find any results or was invalid. Try running the program again!");
+		}
+		return null;
 		
 	}
 	
 	//searches for an employee by their employer's name
 	public List<EmployeeInformation> searchForEmployeeByEmployerName(String employer) {
-		EntityManager em = emFactory.createEntityManager();
-		em.getTransaction().begin();
-		TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.employer = :selectedEmployer", EmployeeInformation.class);
-		typedQuery.setParameter("selectedEmployer", employer);
-		List<EmployeeInformation>foundEmployeeInformations = typedQuery.getResultList();
-		em.close();
-			
-		return foundEmployeeInformations;
+		try {
+			EntityManager em = emFactory.createEntityManager();
+			em.getTransaction().begin();
+			TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.employer = :selectedEmployer", EmployeeInformation.class);
+			typedQuery.setParameter("selectedEmployer", employer);
+			List<EmployeeInformation>foundEmployeeInformations = typedQuery.getResultList();
+			em.close();
+				
+			return foundEmployeeInformations;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("The information entered to search did not find any results or was invalid. Try running the program again!");
+		}
+		return null;
 		
 	}
 	
 	//searches for an employee by their tenure
 	public List<EmployeeInformation> searchForEmployeeByTenure(int tenure) {
-		EntityManager em = emFactory.createEntityManager();
-		em.getTransaction().begin();
-		TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.yearsEmployed = :selectedYearsEmployed", EmployeeInformation.class);
-		typedQuery.setParameter("selectedYearsEmployed", tenure);
-		List<EmployeeInformation>foundEmployeeInformations = typedQuery.getResultList();
-		em.close();
-		
-		return foundEmployeeInformations;
+		try {
+			EntityManager em = emFactory.createEntityManager();
+			em.getTransaction().begin();
+			TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.yearsEmployed = :selectedYearsEmployed", EmployeeInformation.class);
+			typedQuery.setParameter("selectedYearsEmployed", tenure);
+			List<EmployeeInformation>foundEmployeeInformations = typedQuery.getResultList();
+			em.close();
+			
+			return foundEmployeeInformations;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("The information entered to search did not find any results or was invalid. Try running the program again!");
+		}
+		return null;
 	}
 		
 	
 	public void updateEmployee(EmployeeInformation toEdit) {
 		
-		EntityManager em = emFactory.createEntityManager();
-		em.getTransaction().begin();
-		em.merge(toEdit);
-		em.getTransaction().commit();
-		em.close();
+		try {
+			EntityManager em = emFactory.createEntityManager();
+			em.getTransaction().begin();
+			em.merge(toEdit);
+			em.getTransaction().commit();
+			em.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("We were unable to update the information, please try again!");
+		}
 	}
 	
 	public void cleanUp() {
@@ -104,6 +133,7 @@ public class EmployeeDataHelper {
 	/**
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<EmployeeInformation> showAllData() {
 		// TODO Auto-generated method stub
 		
@@ -119,29 +149,36 @@ public class EmployeeDataHelper {
 	 */
 	public void deleteEmployee(EmployeeInformation toDelete) {
 		
-		// TODO Auto-generated method stub
-		EntityManager em = emFactory.createEntityManager();
-		em.getTransaction().begin();
-		
-		TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.employeeFirstName = :selectedEmployeeFirstName and ei.employeeLastName = :selectedEmployeeLastName and ei.employer = :selectedEmployer and ei.yearsEmployed = :selectedYearsEmployed", EmployeeInformation.class);
+		try {
+			// TODO Auto-generated method stub
+			EntityManager em = emFactory.createEntityManager();
+			em.getTransaction().begin();
+			
+			TypedQuery<EmployeeInformation>typedQuery = em.createQuery("select ei from EmployeeInformation ei where ei.employeeFirstName = :selectedEmployeeFirstName and ei.employeeLastName = :selectedEmployeeLastName and ei.employer = :selectedEmployer and ei.yearsEmployed = :selectedYearsEmployed", EmployeeInformation.class);
 
-		//Substitute parameter with actual data from the toDelete item
-		typedQuery.setParameter("selectedEmployeeFirstName", toDelete.getEmployeeFirstName());
-		typedQuery.setParameter("selectedEmployeeLastName", toDelete.getEmployeeLastName());
-		typedQuery.setParameter("selectedEmployer", toDelete.getEmployer());
-		typedQuery.setParameter("selectedYearsEmployed", toDelete.getYearsEmployed());
-		
-		//we only want one result
-		typedQuery.setMaxResults(1);
-	
-		
-		//get the result and save it into a new list item
-		EmployeeInformation result = typedQuery.getSingleResult();
-		
-		//remove it
-		em.remove(result);
-		em.getTransaction().commit();
-		em.close();
+			//Substitute parameter with actual data from the toDelete item
+			typedQuery.setParameter("selectedEmployeeFirstName", toDelete.getEmployeeFirstName());
+			typedQuery.setParameter("selectedEmployeeLastName", toDelete.getEmployeeLastName());
+			typedQuery.setParameter("selectedEmployer", toDelete.getEmployer());
+			typedQuery.setParameter("selectedYearsEmployed", toDelete.getYearsEmployed());
+			
+			//we only want one result
+			typedQuery.setMaxResults(1);
+
+			
+			//get the result and save it into a new list item
+			EmployeeInformation result = typedQuery.getSingleResult();
+			
+			//remove it
+			
+				em.remove(result);
+				em.getTransaction().commit();
+				em.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("The information entered to search did not find any results or was invalid. Try running the program again!");
+		}
+
 	}
 
 	/**
@@ -151,10 +188,16 @@ public class EmployeeDataHelper {
 	public EmployeeInformation searchForEmployeeByID(int idToEdit) {
 		
 		// TODO Auto-generated method stub
-		EntityManager em = emFactory.createEntityManager();
-		em.getTransaction().begin();
-		EmployeeInformation found = em.find(EmployeeInformation.class, idToEdit);
-		em.close();
-		return found;
+		try {
+			EntityManager em = emFactory.createEntityManager();
+			em.getTransaction().begin();
+			EmployeeInformation found = em.find(EmployeeInformation.class, idToEdit);
+			em.close();
+			return found;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("The information entered to search did not find any results or was invalid. Try running the program again!");
+		}
+		return null;
 	}
 }
