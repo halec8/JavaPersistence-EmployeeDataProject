@@ -140,7 +140,7 @@ public class EmployeeDataHelper {
 		
 		//remove it
 		em.remove(result);
-		em.getTransaction();
+		em.getTransaction().commit();
 		em.close();
 	}
 
