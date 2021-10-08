@@ -3,11 +3,13 @@
 	<persistence-unit name="EmployeeDBConnection" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>model.EmployeeInformation</class>
+		<class>model.Employee</class>
+		<class>model.EmployeeListDetails</class>
+		<class>control.LocalDateAttributeConverter</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://cis175.cwxgjaywycwe.us-east-1.rds.amazonaws.com/employeeInformation"/>
 			<property name="javax.persistence.jdbc.user" value="admin"/>
-			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 			<property name="javax.persistence.jdbc.password" value="Cs020916"/>
 		</properties>
 	</persistence-unit>
